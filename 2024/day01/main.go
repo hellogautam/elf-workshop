@@ -26,22 +26,35 @@ func sortInt(loc []int) []int {
 
 func SolveP1(loc1 []int, loc2 []int) int {
 	var answer int
-	soretedLoc1 := sortInt(loc1)
-	soretedLoc2 := sortInt(loc2)
 
-	fmt.Println(soretedLoc1)
-	fmt.Println(soretedLoc2)
-
-	for i, _ := range soretedLoc1 {
-		if soretedLoc1[i] > soretedLoc2[i] {
-			answer += soretedLoc1[i] - soretedLoc2[i]
+	for i, _ := range loc1 {
+		if loc1[i] > loc2[i] {
+			answer += loc1[i] - loc2[i]
 		} else {
-			answer += soretedLoc2[i] - soretedLoc1[i]
+			answer += loc2[i] - loc1[i]
 		}
 	}
 
 	return answer
 
+}
+
+func SolveP2(loc1 []int, loc2 []int) int {
+	var answer int
+	answer = 0
+
+	for i := 0; i < len(loc1); i++ {
+		similar := 0
+		for j := 0; j < len(loc2); j++ {
+			if loc1[i] == loc2[j] {
+				similar += 1
+			}
+
+		}
+		answer += loc1[i] * similar
+	}
+
+	return answer
 }
 
 func GetInputsFromFile() ([]int, []int) {
@@ -76,6 +89,10 @@ func GetInputsFromFile() ([]int, []int) {
 
 func main() {
 	fmt.Println("Hello")
+
 	locationIDs1, locationIDs2 := GetInputsFromFile()
-	fmt.Println(SolveP1(locationIDs1, locationIDs2))
+	sortedLoc1 := sortInt(locationIDs1)
+	sortedLoc2 := sortInt(locationIDs2)
+	fmt.Println(SolveP1(sortedLoc1, sortedLoc2))
+	fmt.Println(SolveP2(sortedLoc1, sortedLoc2))
 }
